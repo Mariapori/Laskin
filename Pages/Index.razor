@@ -1,0 +1,52 @@
+﻿@using System.Data;
+@page "/"
+
+<PageTitle>Laskin Electron.NET + Blazor</PageTitle>
+
+<div id="laskinalue">
+<input @bind=vastaus type="text" id="display" readonly>
+<table>
+  <tr>
+    <td><button @onclick="() => NappiaPainettu('1'.ToString())">1</button></td>
+    <td><button @onclick="() => NappiaPainettu('2'.ToString())">2</button></td>
+    <td><button @onclick="() => NappiaPainettu('3'.ToString())">3</button></td>
+    <td><button @onclick="() => NappiaPainettu('+'.ToString())">+</button></td>
+  </tr>
+  <tr>
+    <td><button @onclick="() => NappiaPainettu('4'.ToString())">4</button></td>
+    <td><button @onclick="() => NappiaPainettu('5'.ToString())">5</button></td>
+    <td><button @onclick="() => NappiaPainettu('6'.ToString())">6</button></td>
+    <td><button @onclick="() => NappiaPainettu('-'.ToString())">-</button></td>
+  </tr>
+  <tr>
+    <td><button @onclick="() => NappiaPainettu('7'.ToString())">7</button></td>
+    <td><button @onclick="() => NappiaPainettu('8'.ToString())">8</button></td>
+    <td><button @onclick="() => NappiaPainettu('9'.ToString())">9</button></td>
+    <td><button @onclick="() => NappiaPainettu('*'.ToString())">*</button></td>
+  </tr>
+  <tr>
+    <td><button @onclick="() => NappiaPainettu('C'.ToString())">C</button></td>
+    <td><button @onclick="() => NappiaPainettu('0'.ToString())">0</button></td>
+    <td><button @onclick="() => NappiaPainettu('='.ToString())">=</button></td>
+    <td><button @onclick="() => NappiaPainettu('/'.ToString())">/</button></td>
+  </tr>
+</table>
+</div>
+@code {
+    public string vastaus { get; set; }
+    public void NappiaPainettu(string syote){
+        switch(syote){
+            case "C":
+                vastaus = "";
+                break;
+            case "=":
+                DataTable dt = new DataTable();
+                var v = dt.Compute(vastaus,"");
+                vastaus = v.ToString();
+                break;
+            default:
+                vastaus += syote;
+                break;
+        }
+    }
+}
